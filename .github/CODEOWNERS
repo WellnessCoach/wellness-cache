@@ -1,0 +1,4 @@
+# Example of a CODEOWNERS file https://docs.github.com/en/repositories/managing-your-repositorys-settings-and-features/customizing-your-repository/about-code-owners#example-of-a-codeowners-file
+
+# Default code owner. This person will be required to review each PR
+@AndriiDemchenko-wellnesscoach
