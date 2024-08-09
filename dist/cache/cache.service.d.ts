@@ -15,7 +15,7 @@ declare namespace CacheService {
     /** @param {string} key */
     function deleteByKey(key: string): Promise<void>;
     /** @param {CACHE_PREFIXES[keyof CACHE_PREFIXES]} prefix */
-    function deleteByPrefix(prefix: "GET_HOME_COACH_AVAILABILITY_V1_REPO"): Promise<void>;
+    function deleteByPrefix(prefix: "GET_HOME_COACH_AVAILABILITY_V1_REPO" | "GET_USER_TYPE_SUBSCRIPTION"): Promise<void>;
 }
 export { CacheService as Cache };
 //# sourceMappingURL=cache.service.d.ts.map
