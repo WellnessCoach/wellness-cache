@@ -5,6 +5,11 @@ const { validateKey, cacheWrapper } = require('./cache.helper');
 const { DEFAULT_EXPIRES_IN_SECONDS, CACHE_KEY_DELIMITER } = require('./cache.config');
 const { CACHE_PREFIXES } = require('./cache.constants');
 
+/** @param {string} prefix */
+function generateFullPrefix(prefix) {
+  return cacheInstance.config.globalPrefix + prefix;
+}
+
 // TODO: do not allow to use cache while client is't loaded
 // Type for client is be <RedisClient> | {}
 const CacheService = cacheWrapper({
@@ -24,7 +29,7 @@ const CacheService = cacheWrapper({
     }
 
     // Example: [DEV]GET_COACHES?active=true
-    return `${cacheInstance.config.globalPrefix}${prefix}${CACHE_KEY_DELIMITER}${strKey}`;
+    return `${generateFullPrefix(prefix)}${CACHE_KEY_DELIMITER}${strKey}`;
   },
 
   /** @param {string} key */
@@ -62,7 +67,7 @@ const CacheService = cacheWrapper({
 
     for await (const key of cacheInstance.client.scanIterator({
       TYPE: 'string',
-      MATCH: `${prefix}*`,
+      MATCH: `${generateFullPrefix(prefix)}*`,
       COUNT: 100,
     })) {
       await cacheInstance.client.del(key);
