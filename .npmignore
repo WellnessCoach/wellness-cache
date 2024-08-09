@@ -1,0 +1,17 @@
+# .github/
+# src/
+# .editorconfig
+# .gitignore
+# .npmignore
+# .prettierrc
+# tsconfig.json
+
+# ignore all
+
+.
+
+# allow only
+
+!dist/
+!src/
+!package.json

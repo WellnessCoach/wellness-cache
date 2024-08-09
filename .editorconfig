@@ -1,0 +1,14 @@
+root = true
+
+[*.js]
+indent_style = space
+indent_size = 2
+charset = utf-8
+indent_level = 0
+preserve_newlines = true
+indent_handlebars = true
+singleQuote = true
+max_preserve_newlines = 2
+end_of_line = crlf
+insert_final_newline = true
+trim_trailing_whitespace = true

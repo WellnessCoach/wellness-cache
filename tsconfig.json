@@ -1,0 +1,23 @@
+{
+  "include": ["src/**/*"],
+  "exclude": ["node_modules", "**/node_modules/*"],
+  "compilerOptions": {
+    "target": "ES2015",
+    "allowJs": true,
+    "checkJs": true,
+    "module": "CommonJS",
+    "moduleResolution": "Node",
+    "rootDir": "./src",
+    "outDir": "./dist",
+    "typeRoots": ["@types", "node_modules/@types"],
+		"types": ["node"],
+    // Generate d.ts files
+    "declaration": true,
+    // This compiler run should
+    // only output d.ts files
+    "emitDeclarationOnly": true,
+    // go to js file when using IDE functions like
+    // "Go to Definition" in VSCode
+    "declarationMap": true
+  }
+}
