@@ -4,11 +4,12 @@ declare const _exports: {
         get(key: string): Promise<any>;
         set(key: string, value: Record<string, any> | any[], expiresInSeconds?: number): Promise<void>;
         deleteByKey(key: string): Promise<void>;
-        deleteByPrefix(prefix: "GET_HOME_COACH_AVAILABILITY_V1_REPO" | "GET_USER_TYPE_SUBSCRIPTION"): Promise<void>;
+        deleteByPrefix(prefix: "GET_HOME_COACH_AVAILABILITY_V1_REPO" | "GET_USER_TYPE_SUBSCRIPTION" | "USER_PROPERTY"): Promise<void>;
     };
     CACHE_PREFIXES: Readonly<{
         GET_COACH_AVAILABILITY_REPO: "GET_HOME_COACH_AVAILABILITY_V1_REPO";
         GET_USER_TYPE_SUBSCRIPTION: "GET_USER_TYPE_SUBSCRIPTION";
+        USER_PROPERTY: "USER_PROPERTY";
     }>;
     REDIS_ERROR_TIMEOUT: number;
     connect: typeof import("./cache/cache.instance").connect;
