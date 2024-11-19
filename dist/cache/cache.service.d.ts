@@ -7,6 +7,12 @@ declare namespace CacheService {
     /** @param {string} key */
     function get(key: string): Promise<any>;
     /**
+     * Get data for multiple keys
+     * @param {string[]} keys - Array of keys to fetch
+     * @returns {Promise<Record<string, any>>} - Object with key-value pairs
+     */
+    function getMultiple(keys: string[]): Promise<Record<string, any>>;
+    /**
      * @param {string} key
      * @param {Record<string, any> | any[]} value
      * @param {number} [expiresInSeconds]
@@ -15,7 +21,7 @@ declare namespace CacheService {
     /** @param {string} key */
     function deleteByKey(key: string): Promise<void>;
     /** @param {CACHE_PREFIXES[keyof CACHE_PREFIXES]} prefix */
-    function deleteByPrefix(prefix: "GET_HOME_COACH_AVAILABILITY_V1_REPO" | "GET_USER_TYPE_SUBSCRIPTION"): Promise<void>;
+    function deleteByPrefix(prefix: "GET_HOME_COACH_AVAILABILITY_V1_REPO" | "GET_USER_TYPE_SUBSCRIPTION" | "USER_PROPERTIES" | "USER_PROPERTY_SCHEMAS"): Promise<void>;
 }
 export { CacheService as Cache };
 //# sourceMappingURL=cache.service.d.ts.map
