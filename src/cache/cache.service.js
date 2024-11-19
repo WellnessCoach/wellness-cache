@@ -40,6 +40,23 @@ const CacheService = cacheWrapper({
   },
 
   /**
+   * Get data for multiple keys
+   * @param {string[]} keys - Array of keys to fetch
+   * @returns {Promise<Record<string, any>>} - Object with key-value pairs
+   */
+  async getMultiple(keys) {
+    keys.forEach((key) => validateKey(key));
+
+    const values = await cacheInstance.client.mGet(keys);
+
+    // Combine keys with their parsed values
+    return keys.reduce((result, key, index) => {
+      result[key] = values[index] ? JSON.parse(values[index]) : null;
+      return result;
+    }, {});
+  },
+
+  /**
    * @param {string} key
    * @param {Record<string, any> | any[]} value
    * @param {number} [expiresInSeconds]
