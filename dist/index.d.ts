@@ -4,6 +4,7 @@ declare const _exports: {
         get(key: string): Promise<any>;
         getMultiple(keys: string[]): Promise<Record<string, any>>;
         set(key: string, value: Record<string, any> | any[], expiresInSeconds?: number): Promise<void>;
+        setMultiple(keyValuePairs: Record<string, Record<string, any> | any[]>, expiresInSeconds?: number): Promise<void>;
         deleteByKey(key: string): Promise<void>;
         deleteByPrefix(prefix: "GET_HOME_COACH_AVAILABILITY_V1_REPO" | "GET_USER_TYPE_SUBSCRIPTION" | "USER_PROPERTIES" | "USER_PROPERTY_SCHEMAS"): Promise<void>;
     };

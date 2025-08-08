@@ -18,6 +18,13 @@ declare namespace CacheService {
      * @param {number} [expiresInSeconds]
      */
     function set(key: string, value: Record<string, any> | any[], expiresInSeconds?: number): Promise<void>;
+    /**
+     * Set data for multiple key-value pairs
+     * @param {Record<string, Record<string, any> | any[]>} keyValuePairs - Object with key-value pairs to set
+     * @param {number} [expiresInSeconds] - Optional expiration time in seconds
+     * @returns {Promise<void>}
+     */
+    function setMultiple(keyValuePairs: Record<string, Record<string, any> | any[]>, expiresInSeconds?: number): Promise<void>;
     /** @param {string} key */
     function deleteByKey(key: string): Promise<void>;
     /** @param {CACHE_PREFIXES[keyof CACHE_PREFIXES]} prefix */

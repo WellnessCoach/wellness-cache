@@ -71,6 +71,28 @@ const CacheService = cacheWrapper({
     });
   },
 
+  /**
+   * Set data for multiple key-value pairs
+   * @param {Record<string, Record<string, any> | any[]>} keyValuePairs - Object with key-value pairs to set
+   * @param {number} [expiresInSeconds] - Optional expiration time in seconds
+   * @returns {Promise<void>}
+   */
+  async setMultiple(keyValuePairs, expiresInSeconds) {
+    // Validate all keys
+    Object.keys(keyValuePairs).forEach((key) => validateKey(key));
+
+    const pipeline = cacheInstance.client.multi();
+    
+    Object.keys(keyValuePairs).forEach((key) => {
+      const str = JSON.stringify(keyValuePairs[key]);
+      pipeline.set(key, str, {
+        EX: expiresInSeconds ?? DEFAULT_EXPIRES_IN_SECONDS,
+      });
+    });
+
+    await pipeline.exec();
+  },
+
   /** @param {string} key */
   async deleteByKey(key) {
     validateKey(key);
