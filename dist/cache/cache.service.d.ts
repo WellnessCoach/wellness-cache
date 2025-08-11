@@ -18,8 +18,29 @@ declare namespace CacheService {
      * @param {number} [expiresInSeconds]
      */
     function set(key: string, value: Record<string, any> | any[], expiresInSeconds?: number): Promise<void>;
+    /**
+     * Set data for multiple key-value pairs
+     * @param {Record<string, Record<string, any> | any[]>} keyValuePairs - Object with key-value pairs to set
+     * @param {number} [expiresInSeconds] - Optional expiration time in seconds
+     * @returns {Promise<void>}
+     */
+    function setMultiple(keyValuePairs: Record<string, Record<string, any> | any[]>, expiresInSeconds?: number): Promise<void>;
     /** @param {string} key */
     function deleteByKey(key: string): Promise<void>;
+    /**
+     * Delete multiple keys at once
+     * Use this for small key sets (less than 100 keys)
+     * @param {string[]} keys - Array of keys to delete
+     * @returns {Promise<number>} - Number of keys deleted
+     */
+    function deleteMultiple(keys: string[]): Promise<number>;
+    /**
+     * Delete multiple keys using Redis multi for better performance
+     * Use this for large key sets (100+ keys) for atomic operation
+     * @param {string[]} keys - Array of keys to delete
+     * @returns {Promise<Array>} - Results from each deletion
+     */
+    function deleteMultipleAtomic(keys: string[]): Promise<any[]>;
     /** @param {CACHE_PREFIXES[keyof CACHE_PREFIXES]} prefix */
     function deleteByPrefix(prefix: "GET_HOME_COACH_AVAILABILITY_V1_REPO" | "GET_USER_TYPE_SUBSCRIPTION" | "USER_PROPERTIES" | "USER_PROPERTY_SCHEMAS"): Promise<void>;
 }

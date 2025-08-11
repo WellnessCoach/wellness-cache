@@ -71,11 +71,68 @@ const CacheService = cacheWrapper({
     });
   },
 
+  /**
+   * Set data for multiple key-value pairs
+   * @param {Record<string, Record<string, any> | any[]>} keyValuePairs - Object with key-value pairs to set
+   * @param {number} [expiresInSeconds] - Optional expiration time in seconds
+   * @returns {Promise<void>}
+   */
+  async setMultiple(keyValuePairs, expiresInSeconds) {
+    // Validate all keys
+    Object.keys(keyValuePairs).forEach((key) => validateKey(key));
+
+    const pipeline = cacheInstance.client.multi();
+    
+    Object.keys(keyValuePairs).forEach((key) => {
+      const str = JSON.stringify(keyValuePairs[key]);
+      pipeline.set(key, str, {
+        EX: expiresInSeconds ?? DEFAULT_EXPIRES_IN_SECONDS,
+      });
+    });
+
+    await pipeline.exec();
+  },
+
   /** @param {string} key */
   async deleteByKey(key) {
     validateKey(key);
 
     await cacheInstance.client.del(key);
+  },
+
+  /**
+   * Delete multiple keys at once
+   * Use this for small key sets (less than 100 keys)
+   * @param {string[]} keys - Array of keys to delete
+   * @returns {Promise<number>} - Number of keys deleted
+   */
+  async deleteMultiple(keys) {
+    keys.forEach((key) => validateKey(key));
+
+    const deletedCount = await cacheInstance.client.del(keys);
+    return deletedCount;
+  },
+
+  /**
+   * Delete multiple keys using Redis multi for better performance
+   * Use this for large key sets (100+ keys) for atomic operation
+   * @param {string[]} keys - Array of keys to delete
+   * @returns {Promise<Array>} - Results from each deletion
+   */
+  async deleteMultipleAtomic(keys) {
+    keys.forEach((key) => validateKey(key));
+
+    const pipeline = cacheInstance.client.multi();
+    
+    // Add all DEL commands to pipeline
+    keys.forEach(key => {
+      pipeline.del(key);
+    });
+    
+    // Execute all commands in single atomic operation
+    const results = await pipeline.exec();
+    
+    return results;
   },
 
   /** @param {CACHE_PREFIXES[keyof CACHE_PREFIXES]} prefix */
