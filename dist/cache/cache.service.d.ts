@@ -27,6 +27,18 @@ declare namespace CacheService {
     function setMultiple(keyValuePairs: Record<string, Record<string, any> | any[]>, expiresInSeconds?: number): Promise<void>;
     /** @param {string} key */
     function deleteByKey(key: string): Promise<void>;
+    /**
+     * Delete multiple keys at once
+     * @param {string[]} keys - Array of keys to delete
+     * @returns {Promise<number>} - Number of keys deleted
+     */
+    function deleteMultiple(keys: string[]): Promise<number>;
+    /**
+     * Delete multiple keys using Redis multi for better performance
+     * @param {string[]} keys - Array of keys to delete
+     * @returns {Promise<Array>} - Results from each deletion
+     */
+    function deleteMultipleAtomic(keys: string[]): Promise<any[]>;
     /** @param {CACHE_PREFIXES[keyof CACHE_PREFIXES]} prefix */
     function deleteByPrefix(prefix: "GET_HOME_COACH_AVAILABILITY_V1_REPO" | "GET_USER_TYPE_SUBSCRIPTION" | "USER_PROPERTIES" | "USER_PROPERTY_SCHEMAS"): Promise<void>;
 }

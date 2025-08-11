@@ -6,6 +6,8 @@ declare const _exports: {
         set(key: string, value: Record<string, any> | any[], expiresInSeconds?: number): Promise<void>;
         setMultiple(keyValuePairs: Record<string, Record<string, any> | any[]>, expiresInSeconds?: number): Promise<void>;
         deleteByKey(key: string): Promise<void>;
+        deleteMultiple(keys: string[]): Promise<number>;
+        deleteMultipleAtomic(keys: string[]): Promise<any[]>;
         deleteByPrefix(prefix: "GET_HOME_COACH_AVAILABILITY_V1_REPO" | "GET_USER_TYPE_SUBSCRIPTION" | "USER_PROPERTIES" | "USER_PROPERTY_SCHEMAS"): Promise<void>;
     };
     CACHE_PREFIXES: Readonly<{

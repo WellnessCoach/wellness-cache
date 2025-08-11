@@ -100,6 +100,39 @@ const CacheService = cacheWrapper({
     await cacheInstance.client.del(key);
   },
 
+  /**
+   * Delete multiple keys at once
+   * @param {string[]} keys - Array of keys to delete
+   * @returns {Promise<number>} - Number of keys deleted
+   */
+  async deleteMultiple(keys) {
+    keys.forEach((key) => validateKey(key));
+
+    const deletedCount = await cacheInstance.client.del(keys);
+    return deletedCount;
+  },
+
+  /**
+   * Delete multiple keys using Redis multi for better performance
+   * @param {string[]} keys - Array of keys to delete
+   * @returns {Promise<Array>} - Results from each deletion
+   */
+  async deleteMultipleAtomic(keys) {
+    keys.forEach((key) => validateKey(key));
+
+    const pipeline = cacheInstance.client.multi();
+    
+    // Add all DEL commands to pipeline
+    keys.forEach(key => {
+      pipeline.del(key);
+    });
+    
+    // Execute all commands in single atomic operation
+    const results = await pipeline.exec();
+    
+    return results;
+  },
+
   /** @param {CACHE_PREFIXES[keyof CACHE_PREFIXES]} prefix */
   async deleteByPrefix(prefix) {
     validateKey(prefix);
